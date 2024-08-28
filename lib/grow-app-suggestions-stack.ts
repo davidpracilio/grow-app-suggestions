@@ -12,6 +12,9 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_20_X,
       code: lambda.Code.fromAsset('lambda'),
       handler: 'grow-app-suggestions.handler', // Points to the file in the lambda directory
+      environment: {
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY || '', // Pass the OpenAI API key as an environment variable
+      }
     });
 
     // Define the API Gateway resource

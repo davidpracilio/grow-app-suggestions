@@ -1,7 +1,58 @@
+// exports.handler = async (event) => {
+//   return {
+//     statusCode: 200,
+//     headers: { "Content-Type": "text/plain" },
+//     body: JSON.stringify({ message: "Hello from Grow!" }),
+//   };
+// }
+
+require('dotenv').config();
+const OpenAI = require('openai');
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
 exports.handler = async (event) => {
-  return {
-    statusCode: 200,
-    headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({ message: "Hello from Grow!" }),
-  };
-}
+  const searchTerm = event.queryStringParameters && event.queryStringParameters.searchTerm;
+
+  if (!searchTerm) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'searchTerm query parameter is required.' }),
+    };
+  }
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: 'system',
+          content: `Review the search term entered, and if it isn't related to software engineering do not 
+            proceed with the rest of the prompts.`
+        },
+        {
+          role: 'system',
+          content: `You are a helpful assistant and you are helping a software engineer find learning resources.`
+        },
+        {
+          role: 'user',
+          content: `What are some learning resources for ${searchTerm}? List up to six resources with a maximum
+            of 120 characters for each. List the title, description, and website or link as a url.`
+        },
+      ],
+    });
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response.data),
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal Server Error' }),
+    };
+  }
+};
