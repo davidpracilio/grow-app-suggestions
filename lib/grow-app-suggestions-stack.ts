@@ -25,7 +25,7 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
     learningSuggestionsResource.addMethod('GET');
 
     // Output as a separate stack output
-    new cdk.CfnOutput(this, 'growAppSuggestionsApiUrl', {
+    new cdk.CfnOutput(this, 'GrowAppSuggestionsApiUrl', {
       value: api.url,
       description: 'The URL of the API Gateway',
     });
