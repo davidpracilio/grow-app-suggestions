@@ -2,6 +2,9 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import 'dotenv/config';
+
+const apiKey = process.env.OPENAI_API_KEY || '';
 
 export class GrowAppSuggestionsStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -13,7 +16,7 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
       code: lambda.Code.fromAsset('lambda'),
       handler: 'grow-app-suggestions.handler', // Points to the file in the lambda directory
       environment: {
-        OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
+        OPENAI_API_KEY: apiKey,
       }
     });
 
