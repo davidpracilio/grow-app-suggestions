@@ -10,6 +10,9 @@ jobs:
       - name: install dependencies
         run: npm ci
 
+      - name: Set environment variable for CDK
+        run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
