@@ -43,6 +43,21 @@ exports.handler = async (event) => {
           content: `What are some learning resources for ${searchTerm}? List up to six resources with a maximum
             of 120 characters for each. List the title, description, and website or link as a url.`
         },
+        {
+          role: 'user',
+          content: `Consider listing resources that may not be obvious that would be helpful for someone
+            looking to fill gaps.`
+        },
+        {
+        role: 'user',
+        content: `Place some focus on resources that may cover topics outside of coding, e.g. soft skills,
+          or infrastructure, or networking, or something else that may help under the topic from a different angle?`
+        },
+        {
+          role: 'system',
+          content: `Return the message content as a json collection for parsing back to a front-end web 
+            application.`
+        }
       ],
       temperature: 1,
       max_tokens: 512,

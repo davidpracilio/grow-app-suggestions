@@ -12,6 +12,7 @@ jobs:
 
       - name: Set environment variable for CDK
         run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+        # TODO - Set these environment variables (without >>) to the cdk steps
 
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
