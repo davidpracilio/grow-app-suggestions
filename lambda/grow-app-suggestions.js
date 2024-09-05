@@ -75,7 +75,7 @@ exports.handler = async (event) => {
       throw new Error('Invalid response structure');
     }
 
-    const jsonResponse = JSON.parse(response.data.choices[0].message.content);
+    const jsonResponse = JSON.parse(response.choices[0].message.content);
     const learningSuggestions = jsonResponse.resources;
 
     return {
