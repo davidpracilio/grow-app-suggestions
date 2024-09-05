@@ -68,6 +68,8 @@ exports.handler = async (event) => {
         "type": "json_object"
       },
     });
+
+    console.log('OpenAI API response:', response);
     
     if (!response || !response.choices || !response.choices[0] || !response.choices[0].message) {
       throw new Error('Invalid response structure');
@@ -78,7 +80,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: learningSuggestions,
+      body: JSON.stringify(learningSuggestions),
     };
   } catch (error) {
     console.error(error);
