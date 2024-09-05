@@ -16,7 +16,7 @@ const openai = new OpenAI({
 });
 
 exports.handler = async (event) => {
-  const searchTerm = event.queryStringParameters && event.queryStringParameters.searchTerm;
+  const searchTerm = event.queryStringParameters && event.queryStringParameters.searchterm;
 
   if (!searchTerm) {
     return {
@@ -53,15 +53,23 @@ exports.handler = async (event) => {
         "type": "json_object"
       },
     });
+    
+    if (!response || !response.choices || !response.choices[0] || !response.choices[0].message) {
+      throw new Error('Invalid response structure');
+    }
+
+    const jsonResponse = JSON.parse(response.data.choices[0].message.content);
+    const learningSuggestions = jsonResponse.resources;
+
     return {
       statusCode: 200,
-      body: JSON.stringify(response.data),
+      body: learningSuggestions,
     };
   } catch (error) {
     console.error(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: error }),
+      body: JSON.stringify({ message: 'Internal Server Error' }),
     };
   }
 };
