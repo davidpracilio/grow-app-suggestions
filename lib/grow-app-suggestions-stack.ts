@@ -15,6 +15,7 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_20_X,
       code: lambda.Code.fromAsset('lambda'),
       handler: 'grow-app-suggestions.handler', // Points to the file in the lambda directory
+      timeout: cdk.Duration.seconds(30),
       environment: {
         OPENAI_API_KEY: apiKey,
       }
