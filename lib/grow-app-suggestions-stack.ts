@@ -13,6 +13,7 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
     // Define the Lambda function resource
     const growAppSuggestionsFunction = new lambda.Function(this, 'GrowAppSuggestionsFunction', {
       runtime: lambda.Runtime.NODEJS_20_X,
+      functionName: 'GrowAppSuggestionsFunction',
       code: lambda.Code.fromAsset('lambda'),
       handler: 'grow-app-suggestions.handler', // Points to the file in the lambda directory
       timeout: cdk.Duration.seconds(30),
