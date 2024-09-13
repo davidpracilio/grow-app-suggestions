@@ -35,9 +35,9 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
         {
           statusCode: '200',
           responseParameters: {
-            'method.response.header.Access-Control-Allow-Origin': "'*'",
-            'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-            'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET'",
+            'integration.response.header.Access-Control-Allow-Origin': "'*'",
+            'integration.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+            'integration.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET'",
           },
         },
       ],
@@ -63,9 +63,9 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
         {
           statusCode: '200',
           responseParameters: {
-            'method.response.header.Access-Control-Allow-Origin': "'*'",
-            'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-            'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET'",
+            'integration.response.header.Access-Control-Allow-Origin': "'*'",
+            'integration.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+            'integration.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET'",
           },
         },
       ],
