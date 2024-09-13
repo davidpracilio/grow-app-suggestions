@@ -28,9 +28,49 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
       proxy: false,
     });
 
-    // Define the '/learning-suggestions resource with a GET method
+    // Define the '/learning-suggestions' resource with a GET method
     const learningSuggestionsResource = api.root.addResource('learning-suggestions');
-    learningSuggestionsResource.addMethod('GET');
+    learningSuggestionsResource.addMethod('GET', new apigateway.LambdaIntegration(growAppSuggestionsFunction), {
+      methodResponses: [
+        {
+          statusCode: '200',
+          responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': true,
+            'method.response.header.Access-Control-Allow-Headers': true,
+            'method.response.header.Access-Control-Allow-Methods': true,
+          },
+        },
+      ],
+    });
+
+    // Enable CORS for the OPTIONS preflight request
+    learningSuggestionsResource.addMethod('OPTIONS', new apigateway.MockIntegration({
+      integrationResponses: [
+        {
+          statusCode: '200',
+          responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': "'*'",
+            'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+            'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET'",
+          },
+        },
+      ],
+      passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
+      requestTemplates: {
+        'application/json': '{"statusCode": 200}',
+      },
+    }), {
+      methodResponses: [
+        {
+          statusCode: '200',
+          responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': true,
+            'method.response.header.Access-Control-Allow-Headers': true,
+            'method.response.header.Access-Control-Allow-Methods': true,
+          },
+        },
+      ],
+    });
 
     // Output as a separate stack output
     new cdk.CfnOutput(this, 'GrowAppSuggestionsApiUrl', {
