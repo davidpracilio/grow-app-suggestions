@@ -30,7 +30,21 @@ export class GrowAppSuggestionsStack extends cdk.Stack {
 
     // Define the '/learning-suggestions' resource with a GET method
     const learningSuggestionsResource = api.root.addResource('learning-suggestions');
-    learningSuggestionsResource.addMethod('GET', new apigateway.LambdaIntegration(growAppSuggestionsFunction), {
+    learningSuggestionsResource.addMethod('GET', new apigateway.LambdaIntegration(growAppSuggestionsFunction, {
+      integrationResponses: [
+        {
+          statusCode: '200',
+          responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': "'*'",
+            'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+            'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET'",
+          },
+        },
+      ],
+      requestTemplates: {
+        'application/json': '{"statusCode": 200}',
+      },
+    }), {
       methodResponses: [
         {
           statusCode: '200',
