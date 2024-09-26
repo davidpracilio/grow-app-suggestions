@@ -45,6 +45,10 @@ exports.handler = async (event) => {
         },
         {
           role: 'user',
+          content: `Limit the title length to a maximum of 30 characters.`
+        },
+        {
+          role: 'user',
           content: `Consider listing resources that may not be obvious that would be helpful for someone
             looking to fill gaps.`
         },
